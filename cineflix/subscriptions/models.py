@@ -22,18 +22,18 @@ class QualityChoices(models.TextChoices):
 
     P480 = '480p','480p'
 
-    P1080 = 'Upto 1080p','Upto 1080p'
+    P1080 = 'Upto 1080p','Upto 1080p' 
 
-    P4K = 'Upto 4K','Upto 4K'
+    P4K = 'Upto 4k','Upto 4k' 
 
 class ScreenOrDownloadDeviceChoices(models.IntegerChoices):
 
     ONE = 1,'1'
 
-    TWO = 2,'2'
+    TWO = 2,'2' 
 
-    FOUR = 4,'4'
-    
+    FOUR = 4,'4'   
+
 class SubscriptionPlans(BaseClass):
 
     name = models.CharField(max_length=25)
@@ -44,17 +44,39 @@ class SubscriptionPlans(BaseClass):
 
     quality = models.CharField(max_length=30,choices=QualityChoices.choices)
 
-    no_of_screens = models.IntegerField(max_length=20,choices=ScreenOrDownloadDeviceChoices.choices)
+    no_of_screens = models.IntegerField(choices=ScreenOrDownloadDeviceChoices.choices)
 
-    download_devices = models.IntegerField(max_length=20,choices=ScreenOrDownloadDeviceChoices.choices)
+    download_devices = models.IntegerField(choices=ScreenOrDownloadDeviceChoices.choices)
 
-    class Meta:
+    class Meta :
 
         verbose_name = 'Subscription Plans'
 
         verbose_name_plural = 'Subscription Plans'
 
-    def __str__(self):
+    def _str_(self):
 
-        return self.name
+        return self.name    
+    
 
+class UserSubscriptions(BaseClass):
+
+    profile = models.ForeignKey('authentication.Profile',on_delete=models.CASCADE)
+
+    plan = models.ForeignKey('SubscriptionPlans',on_delete=models.CASCADE)
+
+    start_date = models.DateTimeField(null=True,blank=True)
+
+    end_date = models.DateTimeField(null=True,blank=True)
+
+    active = models.BooleanField(default=False)
+
+    class Meta :
+
+        verbose_name = 'User Subscription'
+
+        verbose_name_plural = 'User Subscription'
+
+    def _str_(self):
+
+        return f'{self.profile.username}-{self.plan.name}'

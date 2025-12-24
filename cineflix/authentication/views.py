@@ -24,6 +24,8 @@ from django.utils.decorators import method_decorator
 
 from .permissions import permitted_user_roles
 
+from django.contrib import messages
+
 # Create your views here.
 
 class LoginView (View) :
@@ -111,6 +113,8 @@ class SignUpView(View):
             user.role = 'User'
 
             user.save()
+
+            messages.success(request,'signup successfully')
 
             recipient = user.email
 

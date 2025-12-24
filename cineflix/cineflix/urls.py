@@ -31,6 +31,8 @@ urlpatterns = [
 
     path('',include('subscriptions.urls')),
 
+    path('',include('payments.urls')),
+
     
 ]
 
