@@ -54,7 +54,7 @@ class SubscriptionPlans(BaseClass):
 
         verbose_name_plural = 'Subscription Plans'
 
-    def _str_(self):
+    def __str__(self):
 
         return self.name    
     
@@ -77,6 +77,6 @@ class UserSubscriptions(BaseClass):
 
         verbose_name_plural = 'User Subscription'
 
-    def _str_(self):
+    def __str__(self):
 
         return f'{self.profile.username}-{self.plan.name}'
